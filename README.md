@@ -1,32 +1,34 @@
-# Edtech
+システムアーキテクチャ（全体構成）
+データの流れを上から下へ、テキストの階層で表現しています。
 
-graph TD
-    subgraph Frontend [フロントエンド]
-        UI[ローコードUI / ユーザー画面<br>例: Streamlit, Dify, Retool]
-    end
+📱 1. フロントエンド層（ローコード / ユーザー画面）
 
-    subgraph Agent [AIエージェント層]
-        TS[TypeScript AIエージェント<br>LangChain.js / Vercel AI SDK]
-    end
+役割: 生徒や先生が実際に操作する画面
 
-    subgraph Backend [CPサーバ / ツール提供層]
-        API[Python FastAPI<br>ツール呼び出し受付]
-        Plan[学習プランニング機能]
-        Quiz[類題作成機能]
-    end
+技術: Retool, Dify, Streamlit など
 
-    subgraph RAG_System [RAG・データ層]
-        VDB[(ベクトルDB<br>Chroma / FAISS)]
-        DB[(生徒データDB<br>SQLite等)]
-        LLM((LLM<br>OpenAI / Claude / Gemini))
-    end
+連携: 下記の「AIエージェント」へユーザーの入力を送る
 
-    %% データの流れ
-    UI <-->|チャット / リクエスト| TS
-    TS <-->|Function Calling| API
-    TS <-->|推論・計画| LLM
-    API --> Plan
-    API --> Quiz
-    Quiz -->|関連知識の検索| VDB
-    Plan -->|成績取得・更新| DB
-    API <-->|回答生成| LLM
+🤖 2. AIエージェント層（TypeScript）
+
+役割: ユーザーと対話し、次に何をするべきか自律的に判断する「窓口」
+
+技術: TypeScript, Node.js, LangChain.js など
+
+連携: 必要に応じて下記の「CPサーバ（API）」を呼び出す（Function Calling）
+
+⚙️ 3. CPサーバ / ツール提供層（Python）
+
+役割: エージェントからの指示を受け、実際の計算や処理を行うAPIサーバー
+
+技術: Python, FastAPI
+
+機能: 「学習プランニング機能」「類題作成機能」の実行
+
+🧠 4. RAG・データ層（バックエンド基盤）
+
+役割: 知識の保管庫と、AIの頭脳
+
+技術: ベクトルDB（Chroma等）、リレーショナルDB（SQLite等）、LLM（GPT-4等）
+
+連携: 上記のツール群から検索（RAG）やデータ保存のリクエストを受ける
