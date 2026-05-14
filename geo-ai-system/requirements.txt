@@ -1,0 +1,17 @@
+# --- Web Framework ---
+fastapi==0.110.0
+uvicorn==0.27.1
+
+# --- Data Processing (Foolproof & Validation) ---
+pydantic==2.6.3
+pandas==2.2.1
+
+# --- Database & RAG (Vector Search) ---
+chromadb==0.4.24
+langchain==0.1.12
+langchain-google-genai==1.0.1  # GeminiのLangChain統合
+google-generativeai==0.4.1     # ★追加: Gemini公式SDK
+
+# --- Environment & Utilities ---
+python-dotenv==1.0.1
+python-multipart==0.0.9

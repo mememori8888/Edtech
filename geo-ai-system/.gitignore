@@ -1,0 +1,11 @@
+# Security
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# 注意: 今回はMVP（プロトタイプ）として読み取り専用で使うため、
+# geography_edu.db と chroma_db/ はあえてGitHubにプッシュします。
