@@ -4,6 +4,15 @@ import requests
 import pandas as pd
 import plotly.express as px
 import os
+import sys # ← これを追加
+
+# --- ここから追加 (パスの解決) ---
+# 現在のファイル(app.py)があるディレクトリの、1つ上のディレクトリ(geo-ai-system)をパスに追加
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+# --- ここまで追加 ---
 
 # ページ設定
 st.set_page_config(page_title="GeoAI Tutor", layout="wide")
