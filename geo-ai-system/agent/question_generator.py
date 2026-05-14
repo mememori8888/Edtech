@@ -23,7 +23,7 @@ class QuestionGeneratorAgent:
             raise ValueError("GOOGLE_API_KEYが設定されていません。")
             
         # 教師役のLLMを初期化 (Gemini 1.5 Flashを使用)
-        self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.7)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7)
 
     def generate_integrated_question(self, country_name: str, topic_keyword: str):
         print(f"[{country_name}] のデータと [{topic_keyword}] の知識を収集中...")
