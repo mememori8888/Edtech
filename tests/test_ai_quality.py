@@ -3,6 +3,7 @@ import pytest
 import time
 # 👇 これらが抜けていました！失礼いたしました。
 from agent.question_generator import QuestionGeneratorAgent
+import time
 
 def test_ai_question_format():
     """AIが生成した問題が、正常なデータをもとに正しい形式で作られているか"""
