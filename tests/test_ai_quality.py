@@ -1,6 +1,7 @@
 # tests/test_ai_quality.py
 import pytest
 from agent.question_generator import QuestionGeneratorAgent
+import time
 
 def test_ai_question_format():
     """AIが生成した問題のフォーマットが正しいかチェックする"""
