@@ -24,7 +24,7 @@ dependencies = [
 dev = ["pytest", "ruff"]
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = [".", "geo-ai-system"]
 testpaths = ["tests"]
 addopts = "-s -v"
 
