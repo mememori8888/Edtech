@@ -29,6 +29,25 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
+      # --- 💡 融合したステップ：テストの直前にRenderサーバーを起こす ---
+      - name: Wake up Render Server
+        run: |
+          echo "Renderサーバーのステータスを確認中..."
+          
+          # 最大12回（10秒ごとに合計2分間）ループして、サーバーが起きるのを待ちます
+          for i in {1..12}; do
+            # HTTPステータスコード（200など）だけを取得
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://edtech-wsqi.onrender.com/ || echo "000")
+            
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ Renderサーバーの起動を確認しました！（ステータス: $STATUS）"
+              break
+            else
+              echo "⏳ まだ眠っています（ステータス: $STATUS）。10秒後に再確認します... ($i/12)"
+              sleep 10
+            fi
+          done
+
       - name: Run Pytest
         run: |
           pytest
