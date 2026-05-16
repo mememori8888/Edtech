@@ -1,0 +1,34 @@
+name: AI Quality CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # GitHubのSecretsから読み込む設定
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      LANGCHAIN_API_KEY: ${{ secrets.LANGCHAIN_API_KEY }}
+      LANGCHAIN_TRACING_V2: "true"
+      LANGCHAIN_PROJECT: "GALS-CI-TEST"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run Pytest
+        run: |
+          pytest

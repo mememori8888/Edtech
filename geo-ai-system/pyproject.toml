@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geo-ai-system"
+version = "0.1.0"
+description = "GALS: GeoAI-Driven Learning System"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "streamlit",
+    "langchain",
+    "google-generativeai",
+    "pandas",
+    "plotly",
+    "requests",
+    "pydantic",
+    "chromadb"
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-s -v"
+
+[tool.ruff]
+select = ["E", "F", "I"]
+line-length = 88

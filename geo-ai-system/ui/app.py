@@ -5,7 +5,18 @@ import pandas as pd
 import plotly.express as px
 import os
 import sys # ← これを追加
+from pathlib import Path
 
+# --- 【賢いパス解決】 ---
+# このファイル(app.py)の場所から見て、2つ上の階層（ルート）を絶対パスで取得
+# app.py(ui/) -> parent(ui/) -> parent(geo-ai-system/)
+root_dir = Path(__file__).resolve().parent.parent
+
+# システムパスにルートディレクトリを追加（すでにある場合は追加しない）
+if str(root_dir) not in sys.path:
+    sys.path.append(str(root_dir))
+# エージェントロジックを呼び出す
+from agent.question_generator import QuestionGeneratorAgent
 # --- ここから追加 (パスの解決) ---
 # 現在のファイル(app.py)があるディレクトリの、1つ上のディレクトリ(geo-ai-system)をパスに追加
 current_dir = os.path.dirname(os.path.abspath(__file__))
