@@ -20,3 +20,6 @@ def test_ai_question_format():
         assert f"{i}." in result, f"選択肢 {i}. が見つかりません"
         
     print("\n✅ AI品質テスト（形式）に合格しました！")
+    # 👇 ログを送信し切るために、最後に3秒だけプログラムを意図的に歩かせる
+    print("LangSmithへのログ送信を待機中...")
+    time.sleep(3)
