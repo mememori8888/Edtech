@@ -5,12 +5,19 @@ import time
 from agent.question_generator import QuestionGeneratorAgent
 import time
 
-def test_ai_question_format():
-    """AIが生成した問題が、正常なデータをもとに正しい形式で作られているか"""
+# 💡 ここがプロのメソッド！テストしたいデータの組み合わせをリストで列挙する
+@pytest.mark.parametrize("country, topic", [
+    ("Japan", "人口転換"),       # テスト1回目：おなじみの基本パターン
+    ("USA", "農業"),             # テスト2回目：別の国とテーマ
+    ("Brazil", "都市問題"),      # テスト3回目：途上国の課題
+    ("Unknown", "宇宙人の生態")  # テスト4回目：意地悪なデータ（AIがどう耐えるか）
+])
+def test_ai_question_format(country, topic):
+    # 引数として country と topic が順番に入ってくる
     agent = QuestionGeneratorAgent()
     
-    # 1. 実際にAIを動かす
-    result = agent.generate_integrated_question("Japan", "人口転換")
+    # 渡されたパラメータでAIを動かす
+    result = agent.generate_integrated_question(country, topic)
     
     # --- 🚨 修正：Noneチェックを最優先にする ---
     assert result is not None, "❌ AIからの返却値が完全に空（None）です"
