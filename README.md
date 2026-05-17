@@ -9,6 +9,28 @@
 * **Frontend (UI):** [https://edtech-menk599l8zp3nzsabefzcz.streamlit.app](https://edtech-menk599l8zp3nzsabefzcz.streamlit.app)
 * **Backend (API):** [https://edtech-wsqi.onrender.com](https://edtech-wsqi.onrender.com)
 
+### Cloud Run (Backend + Frontend 2サービス構成)
+
+このリポジトリには Cloud Run 用の以下ファイルを追加済みです。
+
+* `Dockerfile.backend` (FastAPI / uvicorn / 8080)
+* `Dockerfile.frontend` (Streamlit / 8080 / `server.address=0.0.0.0`)
+* `deploy.sh` (東京リージョン `asia-northeast1` 固定、frontend は Session Affinity 有効)
+
+実行コマンド:
+
+```bash
+cd /workspaces/Edtech
+chmod +x deploy.sh
+PROJECT_ID=<your-gcp-project-id> ./deploy.sh
+```
+
+任意でサービス名も上書きできます:
+
+```bash
+BACKEND_SERVICE=my-backend FRONTEND_SERVICE=my-frontend PROJECT_ID=<your-gcp-project-id> ./deploy.sh
+```
+
 ---
 
 ## 📊 タスク進行状況 (Roadmap Checklist)

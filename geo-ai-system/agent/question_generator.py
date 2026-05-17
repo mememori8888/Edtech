@@ -14,9 +14,9 @@ except ImportError:
 class QuestionGeneratorAgent:
     """Strategyパターン: 異なるデータソースを組み合わせて問題を作成するエージェント"""
     
-    # 修正ポイント: デフォルトのURLをRenderの本番URLに変更
-    def __init__(self, api_base_url="https://edtech-wsqi.onrender.com/api/v1"):
-        self.api_base_url = api_base_url
+    # Cloud Run/ローカル両対応: 引数 > 環境変数(API_BASE_URL) > ローカル既定値 の順で採用
+    def __init__(self, api_base_url: str | None = None):
+        self.api_base_url = api_base_url or os.getenv("API_BASE_URL", "http://localhost:8080/api/v1")
         
         if not os.getenv("GOOGLE_API_KEY"):
             # Streamlit CloudのSecretsから取得される想定
@@ -28,14 +28,14 @@ class QuestionGeneratorAgent:
     def generate_integrated_question(self, country_name: str, topic_keyword: str):
         print(f"[{country_name}] のデータと [{topic_keyword}] の知識を収集中...")
         
-        # 1. FastAPI(Render上の本番サーバー)から構造化データ(SQLite)を取得
+        # 1. FastAPI本番サーバーから構造化データ(SQLite)を取得
         try:
             pop_res = requests.get(f"{self.api_base_url}/population/{country_name}", timeout=10)
             pop_data = pop_res.json() if pop_res.status_code == 200 else "データなし"
         except Exception as e:
             pop_data = f"データ取得エラー: {e}"
 
-        # 2. FastAPI(Render上の本番サーバー)から非構造化データ(Chroma)を取得
+        # 2. FastAPI本番サーバーから非構造化データ(Chroma)を取得
         try:
             rag_res = requests.post(
                 f"{self.api_base_url}/knowledge/search", 

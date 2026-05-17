@@ -29,7 +29,7 @@ if parent_dir not in sys.path:
 st.set_page_config(page_title="GeoAI Tutor", layout="wide")
 
 # 設定 (Fail-safe: FastAPIのURL)
-API_BASE_URL = "https://edtech-wsqi.onrender.com/api/v1"
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8080/api/v1")
 
 st.title("🌏 GeoAI 学習支援システム")
 st.markdown("---")
